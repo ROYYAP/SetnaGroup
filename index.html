@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Login and Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        form {
+            width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccccff;
+            border-radius: 3px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0000dd;
+        }
+
+        input[type="submit"] {
+            display: block;
+            margin: 20px auto;
+            background-color: #3a7ca5;
+            color: white;
+            font-weight: bold;
+            width: 80%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+    <form action="login.php" method="post">
+        <input type="hidden" name="action" value="login">
+        <label for="username">Username/Email:</label><br>
+        <i class="input-icon uil uil-at"></i>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <i class="input-icon uil uil-lock-alt"></i>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <h2>Register</h2>
+    <form action="login.php" method="post">
+        <input type="hidden" name="action" value="register">
+        <label for="reg_username">Username/Email:</label><br>
+        <i class="input-icon uil uil-at"></i>
+        <input type="text" id="reg_username" name="username"><br>
+        <label for="reg_password">Password:</label><br>
+        <i class="input-icon uil uil-lock-alt"></i>
+        <input type="password" id="reg_password" name="password"><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

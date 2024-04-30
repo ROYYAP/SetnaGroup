@@ -1,0 +1,56 @@
+<?php
+include 'db.php';
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'] ?? null;
+    $password = $_POST['password'] ?? null;
+
+    if (isset($_POST['action']) && $_POST['action'] == 'register' && $username && $password) {
+        // Registration process
+        $check = $conn->prepare("SELECT username FROM users_login WHERE username = ?");
+        $check->bind_param("s", $username);
+        $check->execute();
+        $checkResult = $check->get_result();
+        if ($checkResult->num_rows > 0) {
+            echo "Username already exists.";
+        } else {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("INSERT INTO users_login (username, password) VALUES (?, ?)");
+            $stmt->bind_param("ss", $username, $hashed_password);
+            if ($stmt->execute()) {
+                echo "User registered successfully!";
+                header("Location: login.html");
+                exit();
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+            $stmt->close();
+        }
+        $check->close();
+    } elseif (isset($_POST['action']) && $_POST['action'] == 'login' && $username && $password) {
+        // Login process
+        $stmt = $conn->prepare("SELECT id, password FROM users_login WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                header("Location: login.html");
+                exit();
+            } else {
+                echo "Invalid password.";
+            }
+        } else {
+            echo "Invalid username.";
+        }
+        $stmt->close();
+    }
+    $conn->close();
+} else {
+    echo "Invalid request method.";
+}
+?>
